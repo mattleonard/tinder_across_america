@@ -8,17 +8,17 @@ class Tinder
     @pyro
   end
 
-  def self.like_and_load(client)
+  def self.like_and_load(client, location)
     results = client.get_nearby_users["results"]
 
     if results
-      Tinder.load_users_into_db(client, results)
+      Tinder.load_users_into_db(client, results, location)
       Tinder.like_users(client)
-      Tinder.like_and_load(client)
+      Tinder.like_and_load(client, location)
     end
   end
 
-  def self.load_users_into_db(client, results)
+  def self.load_users_into_db(client, results, location)
     results.each do |res|
       User.create(
         tinder_id: res['_id'],
@@ -26,7 +26,8 @@ class Tinder
         bio: res['bio'],
         gender: res['gender'],
         birth_date: res['birth_date'],
-        last_login: res['last_login']
+        last_login: res['last_login'],
+        location: location
       )
     end
   end
@@ -38,7 +39,11 @@ class Tinder
     end
   end
 
-  def move_location(client)
-    client.update_location(latitude, longitude)
+  def self.cycle_locations(client)
+    Location.all.each do |l|
+      client.update_location(l.latitude, l.longitude)
+      sleep 30
+      Tinder.like_and_load(client, l)
+    end
   end
 end
