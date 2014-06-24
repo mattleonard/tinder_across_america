@@ -51,6 +51,7 @@ GEM
     erubis (2.7.0)
     execjs (2.2.0)
     fattr (2.2.2)
+    geocoder (1.2.2)
     highline (1.6.21)
     hike (1.2.3)
     httparty (0.13.1)
@@ -149,6 +150,7 @@ PLATFORMS
 
 DEPENDENCIES
   coffee-rails (~> 4.0.0)
+  geocoder
   jbuilder (~> 2.0)
   jquery-rails
   pg
