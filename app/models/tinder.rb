@@ -20,6 +20,7 @@ class Tinder
 
   def self.load_users_into_db(client, results, location)
     results.each do |res|
+      p "-- Liking #{res['name']}"
       User.create(
         tinder_id: res['_id'],
         name: res['name'],
@@ -41,6 +42,7 @@ class Tinder
 
   def self.cycle_locations(client)
     Location.all.each do |l|
+      p "************ Switching to #{l.address} **************"
       client.update_location(l.latitude, l.longitude)
       sleep 30
       Tinder.like_and_load(client, l)
