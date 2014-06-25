@@ -3,7 +3,7 @@ require 'pyro'
 class Tinder
   def self.login
     api_keys = Sekrets.settings_for(Rails.root.join('sekrets', 'ciphertext'))
-    @pyro = TinderPyro::Client.new
+
     @pyro.sign_in(api_keys['facebook_id'], api_keys['facebook_token'])
     @pyro
   end
