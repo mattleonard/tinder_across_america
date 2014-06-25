@@ -37,7 +37,7 @@ To like every girl in top 100 largest cities in the USA run:
 Current Problems
 ----------------
 
-* I believe I need to slow down the time in between cities because Tinder is sending back the error  `major position change not significant` even though locations change to other site of the country. May need to delay every change of location request by a couple hours. Will probably switch to sidekick and schedule jobs.
+* ~~I believe I need to slow down the time in between cities because Tinder is sending back the error  `major position change not significant` even though locations change to other site of the country. May need to delay every change of location request by a couple hours. Will probably switch to sidekick and schedule jobs.~~
 
 Disclaimer
 ----------
