@@ -14,7 +14,9 @@ class Tinder
     if results
       Tinder.load_users_into_db(client, results, location)
       Tinder.like_users(client)
-      Tinder.like_and_load(client, location)
+      return true
+    else
+      return false
     end
   end
 
@@ -40,12 +42,18 @@ class Tinder
     end
   end
 
-  def self.cycle_locations(client)
+  def self.cycle_locations
+    # Cycles through all locations in the database.
+
     Location.all.each do |l|
       p "************ Switching to #{l.address} **************"
-      client.update_location(l.latitude, l.longitude)
-      sleep 30
-      Tinder.like_and_load(client, l)
+      client = Tinder.login
+      p l.longitude, l.latitude
+      p client.update_location(l.longitude, l.latitude)
+      more_to_like = true
+      while more_to_like
+        more_to_like = Tinder.like_and_load(client, l)
+      end
     end
   end
 end
