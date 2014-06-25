@@ -38,6 +38,8 @@ GEM
     arel (5.0.1.20140414130214)
     arrayfields (4.9.2)
     builder (3.2.2)
+    celluloid (0.15.2)
+      timers (~> 1.1.0)
     chronic (0.10.2)
     coerce (0.0.6)
       chronic (>= 0.6.2)
@@ -48,9 +50,18 @@ GEM
       coffee-script-source
       execjs
     coffee-script-source (1.7.0)
+    connection_pool (2.0.0)
+    daemons (1.1.9)
+    dotenv (0.11.1)
+      dotenv-deployment (~> 0.0.2)
+    dotenv-deployment (0.0.2)
     erubis (2.7.0)
+    eventmachine (1.0.3)
     execjs (2.2.0)
     fattr (2.2.2)
+    foreman (0.74.0)
+      dotenv (~> 0.11.1)
+      thor (~> 0.19.1)
     geocoder (1.2.2)
     highline (1.6.21)
     hike (1.2.3)
@@ -81,6 +92,8 @@ GEM
     pg (0.17.1)
     polyglot (0.3.5)
     rack (1.5.2)
+    rack-protection (1.5.3)
+      rack
     rack-test (0.6.2)
       rack (>= 1.0)
     rails (4.1.1)
@@ -106,6 +119,9 @@ GEM
     rake (10.3.2)
     rdoc (4.1.1)
       json (~> 1.4)
+    redis (3.1.0)
+    redis-namespace (1.5.0)
+      redis (~> 3.0, >= 3.0.4)
     sass (3.2.19)
     sass-rails (4.0.3)
       railties (>= 4.0.0, < 5.0)
@@ -121,6 +137,16 @@ GEM
       highline (>= 1.6.15)
       main (>= 5.1.1)
       map (>= 6.3.0)
+    sidekiq (3.1.4)
+      celluloid (>= 0.15.2)
+      connection_pool (>= 2.0.0)
+      json
+      redis (>= 3.0.6)
+      redis-namespace (>= 1.3.1)
+    sinatra (1.4.5)
+      rack (~> 1.4)
+      rack-protection (~> 1.4)
+      tilt (~> 1.3, >= 1.3.4)
     spring (1.1.3)
     sprockets (2.11.0)
       hike (~> 1.2)
@@ -131,9 +157,14 @@ GEM
       actionpack (>= 3.0)
       activesupport (>= 3.0)
       sprockets (~> 2.8)
+    thin (1.6.2)
+      daemons (>= 1.0.9)
+      eventmachine (>= 1.0.0)
+      rack (>= 1.0.0)
     thor (0.19.1)
     thread_safe (0.3.4)
     tilt (1.4.1)
+    timers (1.1.0)
     treetop (1.4.15)
       polyglot
       polyglot (>= 0.3.1)
@@ -150,6 +181,7 @@ PLATFORMS
 
 DEPENDENCIES
   coffee-rails (~> 4.0.0)
+  foreman
   geocoder
   jbuilder (~> 2.0)
   jquery-rails
@@ -159,7 +191,10 @@ DEPENDENCIES
   sass-rails (~> 4.0.3)
   sdoc (~> 0.4.0)
   sekrets
+  sidekiq
+  sinatra (>= 1.3.0)
   spring
+  thin
   tinder_pyro!
   turbolinks
   uglifier (>= 1.3.0)

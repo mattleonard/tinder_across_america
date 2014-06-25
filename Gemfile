@@ -16,6 +16,13 @@ gem 'coffee-rails', '~> 4.0.0'
 # gem 'therubyracer',  platforms: :ruby
 # Get cooridnates for major cities
 gem 'geocoder'
+# Sidekiq for job scheduling
+gem 'sidekiq'
+gem 'sinatra', '>= 1.3.0', :require => nil
+# Foreman
+gem 'foreman'
+# Thin server
+gem 'thin'
 # For heroku
 gem 'rails_12factor'
 # Private api tinder

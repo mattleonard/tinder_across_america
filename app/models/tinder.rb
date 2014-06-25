@@ -3,7 +3,7 @@ require 'pyro'
 class Tinder
   def self.login
     api_keys = Sekrets.settings_for(Rails.root.join('sekrets', 'ciphertext'))
-
+    @pyro = TinderPyro::Client.new
     @pyro.sign_in(api_keys['facebook_id'], api_keys['facebook_token'])
     @pyro
   end
@@ -21,6 +21,7 @@ class Tinder
   end
 
   def self.load_users_into_db(client, results, location)
+    p "------- Location #{location.address} --------------"
     results.each do |res|
       p "-- Liking #{res['name']}"
       User.create(
@@ -42,18 +43,21 @@ class Tinder
     end
   end
 
-  def self.cycle_locations
-    # Cycles through all locations in the database.
+  def self.like_location(location_id)
+    location = Location.find(location_id)
+    client = Tinder.login
+    client.update_location(location.longitude, location.latitude)
+    more_to_like = true
+    while more_to_like
+      more_to_like = Tinder.like_and_load(client, location)
+    end
+  end
 
-    Location.all.each do |l|
-      p "************ Switching to #{l.address} **************"
-      client = Tinder.login
-      p l.longitude, l.latitude
-      p client.update_location(l.longitude, l.latitude)
-      more_to_like = true
-      while more_to_like
-        more_to_like = Tinder.like_and_load(client, l)
-      end
+  def self.schedule_jobs
+    # Cycles through all locations in the database.
+    Location.all.each_with_index do |l,i|
+      p "Scheduling #{l.address}"
+      Job.schedule((i.hours * 3), Tinder, :like_location, l.id)
     end
   end
 end
